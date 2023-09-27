@@ -1,78 +1,107 @@
-🤖 Telegram-бот онлайн-знакомств (aiogram, Gino, PostgresQL)
+🤖 Telegram online dating bot (aiogram, Gino, PostgresQL)
 =========================================
 
-!!!Примечание!!!
+!!!Note!!!
 
-1. При запуске бота все таблицы базы данных обнуляются и создаются. В БД Админ заносится первый админ.
-Только он сможет добавлять, удалять и т.д. администраторов.
-2. Админы смогут добавлять и удалять и т.д. модераторов и пользователей.
-3. Модераторы смогут добавлять и удалять и т.д. пользователей.
-4. Из команд только /start у всех.
-Команда /start будет в зависимости от роли пользователя открывать клавиатуру с возможными командами
-5. При нажатии на старт у всех будет проверяться username 
+1. When you start the bot, all database tables are zeroed and created. The first admin is entered in the Admin database.
+Only he will be able to add, delete, etc. admins.
+2. admins will be able to add and delete, etc. moderators and users.
+3. Moderators will be able to add and delete etc. users.
+4. From the commands only /start for everyone.
+The /start command will, depending on the user's role, open a keyboard with possible commands
+5. When clicking on start everyone will be checked for username 
 
-1 Описание
+1 Description
 
-Система имеет три роли:
-- пользователи;
-- модераторы (проверяют пользователей, блокируют/разблокируют пользователей);
-- администраторы.
-Пользователи бота просматривают карточки с другими пользователями и ставят «Симпатию» либо «Пропуск». Если два 
-пользователя поставили друг другу «Симпатию», то образуется «Пара». После образования пары пользователям доступны 
-контакты друг друга (username в Telegram). 
-Каждый пользователь должен пройти модерацию, модератор в своей панели управления видят всех пользователей, ожидающий 
-проверки. Администратор видит вообще всех пользователей и может установить модерацию для каждого из них пройденной или 
-непройденной.
+The system has three roles:
+- users;
+- moderators (check users, block/unblock users);
+- administrators.
+Bot users view cards with other users and give a "Sympathy" or "Skip". If two 
+users give each other "Sympathy", a "Pair" is formed. Once a pair is formed, users have access to each other's 
+each other's contacts (username in Telegram). 
+Each user must be moderated, the moderator in his control panel sees all users, waiting for the 
+verification. Administrator sees all users in general and can set moderation for each of them passed or not passed. 
+not passed.
 
-2 Основной функционал
+2 Basic functionality
 
-2.1 Пользователи
-2.1.1 Создание профиля на сайте. 
-При первом заходе в бот указываются следующие поля:
-- имя;
-- возраст;
-- пол;
-- биография (текст);
-- от 1 до 10 фото;
-- ищу м или ж;
-- ищу возраст от и до;
-- локация поиска;
-- радиус поиска.
-У пользователя для работы с ботом должен быть установлен username в Telegram, иначе регистрация не запускается, и 
-выводится сообщение с соответствующим текстом. Все вышеперечисленные поля обязательны для заполнения и доступы позднее 
-для изменения в настройках.
-2.1.2 Просмотр карточек пользователей по заданным критериям поиска.
-Используя заданные в настройках параметры поиска (ищу м или ж, ищу возраст от и до, локация и радиус) пользователи 
-просматривают по одному человеку с помощью InlineKeyboard. После нажатия на «Симпатию» или «Пропуск» отменить данное 
-действие нельзя. Также есть возможность отправить жалобу на карточку пользователя с указанием причины (из списка 
-заданных администратором либо свою текстом).
-2.1.3 Страница «Я нравлюсь им» со списком пользователей, которые поставили данному пользователю «Симпатию». 
-Для каждого из этих профилей есть возможность оставить взаимную «Симпатию» (образуется «Пара») либо «Пропуск» 
-(пользователь удаляется со странице «Я нравлюсь им»).
-2.1.4 Страница «Мои пары» со списком профилей. Непросмотренные профили помечаются (условно звездочкой). При заходе в 
-карточку пользователя, с которым образовалась «Пара», отображается информация пользователя + его username для связи 
-(контакт). Поиск среди своих «Пар» по имени, фильтр по возрасту.
-2.1.5 Страница «Мои настройки». Редактирование всей информации, указанной на этапе регистрации.
-2.1.6 Страница «Люди рядом» с сортировкой пользователей по дистанции относительно локации, заданной текущим 
-пользователем.
-2.2 Модераторы
-Модератор имеет весь функционал Пользователя включительно.
-2.2.1 Страница  с пользователями, ожидающими прохождения модерации. Возможность подтвердить или отклонить модерацию.
-2.2.1 Страница с пользователям, на которых жаловались. Возможность заблокировать аккаунт (временно или навсегда). 
-В базе данных блокировка фиксируется за определенным модератором, чтобы было понятно, кто принял решение о блокировке.
-2.3 Администраторы
-Администратор имеет весь функционал Модератора включительно.
-2.3.1 Страница со всеми пользователям (N записей на странице, задается в настройках). По каждому пользователю можно 
-совершить следующие действия:
-- блокировка (временная или постоянная) или разблокировка; В случае блокировки пользователю отправляется заданное сообщение;
-- подтвердить или отклонить модерацию;
-- изменить информацию, введенную пользователем при регистрации.
-- отправить сообщение от имени бота.
-2.3.2 Рассылка всем пользователям.
-3 Техническая часть
-3.1 Язык программирования: Python.
-3.2 СУБД: PostgreSQL. Библиотека для работы с PostgreSQL из Python – Gino.
-3.3 Библиотека разработки бота: aiogram.
-3.4 У страниц с несколькими однородными объектами должна быть пагинация, задаваемая в настройках бота перед запуском.
-3.5 Все настройки должны быть вынесены в конфигурационный файл или соответсвующие записи БД.
-3.6 Логирование.
+2.1 Users
+
+2.1.1 Creating a profile on the site. 
+
+When entering the bot for the first time, the following fields are specified:
+- name;
+- age;
+- gender;
+- biography (text);
+- from 1 to 10 photos;
+- looking for m or w;
+- looking for age from and to;
+- search location;
+- search radius.
+- 
+The user must have username set in Telegram to work with the bot, otherwise registration is not started and a message with the corresponding text is displayed. 
+a message with the corresponding text is displayed. All of the above fields are mandatory and can be changed later in the settings. 
+to change in the settings.
+
+2.1.2 View user cards by specified search criteria.
+
+Using the search parameters specified in the settings (looking for m or w, looking for age from and to, location and radius) users 
+browse one person at a time using InlineKeyboard. Once a user clicks on "Like" or "Skip" they cannot cancel the action. 
+action cannot be undone. It is also possible to send a complaint to a user's card with a reason (either from the list 
+specified by the administrator or by its own text).
+
+2.1.3 The "They Like Me" page with a list of users who have given this user a "Sympathy". 
+
+For each of these profiles there is an opportunity to leave a mutual "Like" (a "Couple" is formed) or "Skip" 
+(the user is removed from the "They Like Me" page).
+
+2.1.4 "My Couples" page with a list of profiles. Unviewed profiles are marked (conventionally with an asterisk).
+When you enter the card of a user with whom a "Couple" has been formed, the user's information + his username for contact is displayed 
+(contact). Search among your "Couples" by name, filter by age.
+
+2.1.5 "My Settings" page. Editing of all information specified at the registration stage.
+
+2.1.6 "People Nearby" page with sorting of users by distance from the location specified by the current user. 
+user.
+
+2.2 Moderators
+
+Moderator has all the functionality of the User inclusive.
+
+2.2.1 Page with users waiting for moderation. Ability to confirm or reject moderation.
+
+2.2.1 Page with users complained about. Ability to block an account (temporarily or permanently). 
+In the database the blocking is fixed for a certain moderator, so that it is clear who made the decision to block.
+
+2.3 Administrators
+
+An Administrator has all the functionality of a Moderator inclusive.
+
+2.3.1 A page with all users (N entries per page, set in the settings). For each user you can 
+perform the following actions for each user:
+
+- blocking (temporary or permanent) or unblocking; in case of blocking, a specified message is sent to the user;
+- confirm or reject moderation;
+- change the information entered by the user during registration.
+- send a message on behalf of the bot.
+- 
+2.3.2 Mailing to all users.
+  
+3 Technical part
+
+3.1 Programming language: Python.
+
+3.2 DBMS: PostgreSQL. Library for working with PostgreSQL from Python - Gino.
+
+3.3 Bot development library: aiogram.
+
+3.4 Pages with several homogeneous objects should have pagination set in bot settings before launching.
+
+3.5 All settings should be placed in a configuration file or corresponding database records.
+
+3.6 Logging.
+
+
+Translated with www.DeepL.com/Translator (free version)
