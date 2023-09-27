@@ -102,6 +102,3 @@ perform the following actions for each user:
 3.5 All settings should be placed in a configuration file or corresponding database records.
 
 3.6 Logging.
-
-
-Translated with www.DeepL.com/Translator (free version)
